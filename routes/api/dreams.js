@@ -5,26 +5,23 @@ const Dreams = require('../../models/Dreams');
 
 // Gets All Dreams
 router.get('/', async (req, res) => {
-    console.log(req.query)
     try{
         const dreams = await Dreams.find()
         res.send(dreams);
 
     }catch (err){
-        res.status(500).json( { messag: err.message})
+        res.status(500).json( { message: err.message})
     }
 });
 
 // Gets All Dream Types
 router.get('/types', async (req, res) => {
     try{
-
-
         let dreamTypes = ['happy', 'sad', 'scary', 'exciting']
         res.send(dreamTypes);
 
     }catch (err){
-        res.status(500).json( { messag: err.message})
+        res.status(500).json( { message: err.message})
     }
 });
 
@@ -59,9 +56,6 @@ router.get('/search', async (req, res) => {
 
             dreams = await Dreams.find({ $or:[ {'title': textExp}, {'type':typeExp} ]})
         }
-
-
-
             res.send(dreams);
 
     }catch (err){
@@ -97,7 +91,7 @@ router.get('/:id', async (req, res) => {
     try{
         single_dream = await Dreams.findById(req.params.id)
         if(single_dream == null ){
-            return res.status(404).json( {message: 'Cannot find subscriber'})
+            return res.status(404).json( {message: 'Cannot find dream'})
         }
         res.send(single_dream)
 
