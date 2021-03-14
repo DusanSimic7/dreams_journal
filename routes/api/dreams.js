@@ -5,6 +5,7 @@ const Dreams = require('../../models/Dreams');
 
 // Gets All Dreams
 router.get('/', async (req, res) => {
+    console.log(req.query)
     try{
         const dreams = await Dreams.find()
         res.send(dreams);
@@ -13,6 +14,49 @@ router.get('/', async (req, res) => {
         res.status(500).json( { messag: err.message})
     }
 });
+
+// Search Dreams
+router.get('/search', async (req, res) => {
+    console.log(req.query)
+    let searchText = req.query.text;
+    let searchType = req.query.type;
+    let textExp;
+    let typeExp;
+    let dreams;
+
+    try{
+        if (searchText !== "" && searchType !== "") {
+            textExp = new RegExp('.*'+searchText+'.*', 'i');
+            typeExp = searchType;
+
+            dreams = await Dreams.find({ $and:[ {'title': textExp}, {'type':typeExp} ]})
+        } else {
+            if(searchText !== "" || searchText !== null) {
+                textExp = new RegExp('.*'+searchText+'.*', 'i');
+            } else {
+                typeExp = searchType;
+            }
+
+            if(searchType !== "" || searchType !== null) {
+                // this should not be substring search. it should only take whole word
+                typeExp = searchType;
+            } else {
+                textExp = new RegExp('.*'+searchText+'.*', 'i');
+            }
+
+            dreams = await Dreams.find({ $or:[ {'title': textExp}, {'type':typeExp} ]})
+        }
+
+
+
+            res.send(dreams);
+
+    }catch (err){
+        res.status(500).json( { messag: err.message})
+    }
+});
+
+
 
 
 // Create Dream
