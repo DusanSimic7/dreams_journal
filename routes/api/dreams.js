@@ -15,6 +15,19 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Gets All Dream Types
+router.get('/types', async (req, res) => {
+    try{
+
+
+        let dreamTypes = ['happy', 'sad', 'scary', 'exciting']
+        res.send(dreamTypes);
+
+    }catch (err){
+        res.status(500).json( { messag: err.message})
+    }
+});
+
 // Search Dreams
 router.get('/search', async (req, res) => {
     console.log(req.query)
