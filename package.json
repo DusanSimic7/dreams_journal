@@ -1,0 +1,30 @@
+{
+  "name": "dreams_journal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DusanSimic7/dreams_journal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DusanSimic7/dreams_journal/issues"
+  },
+  "homepage": "https://github.com/DusanSimic7/dreams_journal#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.0",
+    "nodemon": "^2.0.7"
+  }
+}
