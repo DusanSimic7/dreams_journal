@@ -41,13 +41,13 @@ router.get('/search', async (req, res) => {
 
             dreams = await Dreams.find({ $and:[ {'title': textExp}, {'type':typeExp} ]})
         } else {
-            if(searchText !== "" || searchText !== null) {
+            if(searchText !== "") {
                 textExp = new RegExp('.*'+searchText+'.*', 'i');
             } else {
                 typeExp = searchType;
             }
 
-            if(searchType !== "" || searchType !== null) {
+            if(searchType !== "") {
                 // this should not be substring search. it should only take whole word
                 typeExp = searchType;
             } else {
@@ -56,10 +56,13 @@ router.get('/search', async (req, res) => {
 
             dreams = await Dreams.find({ $or:[ {'title': textExp}, {'type':typeExp} ]})
         }
+        if(searchText === "" && searchType === ""){
+            res.send('You must enter text or type')
+        }
             res.send(dreams);
 
     }catch (err){
-        res.status(500).json( { messag: err.message})
+        res.status(500).json( { message: err.message})
     }
 });
 
